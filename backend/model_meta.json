@@ -1,0 +1,113 @@
+{
+  "features": [
+    "number of bedrooms",
+    "number of bathrooms",
+    "living area",
+    "lot area",
+    "number of floors",
+    "waterfront present",
+    "number of views",
+    "condition of the house",
+    "grade of the house",
+    "Area of the house(excluding basement)",
+    "Area of the basement",
+    "Built Year",
+    "Renovation Year",
+    "living_area_renov",
+    "lot_area_renov",
+    "Number of schools nearby",
+    "Distance from the airport"
+  ],
+  "r2": 0.7655387390552967,
+  "mae": 1356210.4181262713,
+  "mape": 22.967622615202597,
+  "train_size": 11696,
+  "test_size": 2924,
+  "stats": {
+    "number of bedrooms": {
+      "min": 1.0,
+      "max": 33.0,
+      "mean": 3.379343365253078
+    },
+    "number of bathrooms": {
+      "min": 0.5,
+      "max": 8.0,
+      "mean": 2.1295827633378934
+    },
+    "living area": {
+      "min": 185.0,
+      "max": 6770.0,
+      "mean": 1049.1250341997263
+    },
+    "lot area": {
+      "min": 260.0,
+      "max": 537109.0,
+      "mean": 7546.482558139535
+    },
+    "number of floors": {
+      "min": 1.0,
+      "max": 3.5,
+      "mean": 1.502359781121751
+    },
+    "waterfront present": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.007660738714090287
+    },
+    "number of views": {
+      "min": 0.0,
+      "max": 4.0,
+      "mean": 0.23310533515731874
+    },
+    "condition of the house": {
+      "min": 1.0,
+      "max": 5.0,
+      "mean": 3.4305061559507526
+    },
+    "grade of the house": {
+      "min": 4.0,
+      "max": 13.0,
+      "mean": 7.682421340629275
+    },
+    "Area of the house(excluding basement)": {
+      "min": 185.0,
+      "max": 4705.0,
+      "mean": 900.8859097127223
+    },
+    "Area of the basement": {
+      "min": 0.0,
+      "max": 2410.0,
+      "mean": 148.2387140902873
+    },
+    "Built Year": {
+      "min": 1900.0,
+      "max": 2015.0,
+      "mean": 1970.9264021887825
+    },
+    "Renovation Year": {
+      "min": 0.0,
+      "max": 2015.0,
+      "mean": 90.92400820793434
+    },
+    "living_area_renov": {
+      "min": 230.0,
+      "max": 3055.0,
+      "mean": 998.3458276333789
+    },
+    "lot_area_renov": {
+      "min": 325.0,
+      "max": 280308.0,
+      "mean": 6376.595417236662
+    },
+    "Number of schools nearby": {
+      "min": 1.0,
+      "max": 3.0,
+      "mean": 2.0122435020519838
+    },
+    "Distance from the airport": {
+      "min": 50.0,
+      "max": 80.0,
+      "mean": 64.95095759233926
+    }
+  }
+}

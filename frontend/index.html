@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI House Price Predictor — India</title>
+    <meta name="description" content="Predict Indian house prices instantly using a machine learning model trained on real estate data.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Ambient background -->
+    <div class="bg-canvas" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-lines"></div>
+    </div>
+
+    <div class="page-wrapper">
+
+        <!-- ── Header ─────────────────────────────────────── -->
+        <header class="site-header">
+            <div class="logo">
+                <span class="logo-icon">⬡</span>
+                <span class="logo-text">ProphetAI</span>
+            </div>
+            <div class="model-badge" id="model-badge">
+                <span class="badge-dot"></span>
+                <span id="badge-text">Loading model…</span>
+            </div>
+        </header>
+
+        <!-- ── Hero ───────────────────────────────────────── -->
+        <section class="hero">
+            <h1>Predict Your <span class="gradient-text">Property Value</span></h1>
+            <p class="hero-sub">Powered by a Gradient Boosting model trained on <strong>14,620</strong> real estate transactions across India.</p>
+        </section>
+
+        <!-- ── Main Card ──────────────────────────────────── -->
+        <main class="card glass" id="main-card">
+
+            <div class="card-tabs">
+                <button class="tab active" data-tab="basic" id="tab-basic">Basic Details</button>
+                <button class="tab" data-tab="advanced" id="tab-advanced">Property Info</button>
+                <button class="tab" data-tab="location" id="tab-location">Location & Extras</button>
+            </div>
+
+            <form id="prediction-form" novalidate>
+
+                <!-- Tab 1: Basic Details -->
+                <div class="tab-panel active" id="panel-basic">
+                    <div class="form-grid">
+                        <div class="input-group" data-tip="Total heated living space in sq ft">
+                            <label for="living_area">Living Area <span class="unit">(sq ft)</span></label>
+                            <input type="number" id="living_area" name="living_area" placeholder="e.g. 2000" min="100" max="15000" required>
+                        </div>
+                        <div class="input-group" data-tip="Total lot / plot area in sq ft">
+                            <label for="lot_area">Lot Area <span class="unit">(sq ft)</span></label>
+                            <input type="number" id="lot_area" name="lot_area" placeholder="e.g. 5000" min="100" max="500000" required>
+                        </div>
+                        <div class="input-group" data-tip="Number of bedrooms">
+                            <label for="bedrooms">Bedrooms</label>
+                            <input type="number" id="bedrooms" name="bedrooms" placeholder="e.g. 3" min="1" max="20" required>
+                        </div>
+                        <div class="input-group" data-tip="Number of bathrooms (half-bath = 0.5)">
+                            <label for="bathrooms">Bathrooms</label>
+                            <input type="number" id="bathrooms" name="bathrooms" placeholder="e.g. 2" min="0.5" max="10" step="0.25" required>
+                        </div>
+                        <div class="input-group" data-tip="Number of floors in the house">
+                            <label for="floors">Floors</label>
+                            <input type="number" id="floors" name="floors" placeholder="e.g. 2" min="1" max="4" step="0.5" required>
+                        </div>
+                        <div class="input-group" data-tip="Above-ground sq ft (excluding basement)">
+                            <label for="area_excl_basement">Above Ground <span class="unit">(sq ft)</span></label>
+                            <input type="number" id="area_excl_basement" name="area_excl_basement" placeholder="e.g. 1800" min="0" max="15000" required>
+                        </div>
+                        <div class="input-group" data-tip="Basement floor area in sq ft (0 if none)">
+                            <label for="basement_area">Basement Area <span class="unit">(sq ft)</span></label>
+                            <input type="number" id="basement_area" name="basement_area" placeholder="0 if no basement" min="0" max="5000" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Property Info -->
+                <div class="tab-panel" id="panel-advanced">
+                    <div class="form-grid">
+                        <div class="input-group" data-tip="Overall condition rating 1 (poor) to 5 (excellent)">
+                            <label for="condition">Condition <span class="unit">(1–5)</span></label>
+                            <div class="rating-row" id="rating-condition">
+                                <button type="button" class="rating-btn" data-val="1">1</button>
+                                <button type="button" class="rating-btn" data-val="2">2</button>
+                                <button type="button" class="rating-btn active" data-val="3">3</button>
+                                <button type="button" class="rating-btn" data-val="4">4</button>
+                                <button type="button" class="rating-btn" data-val="5">5</button>
+                            </div>
+                            <input type="hidden" id="condition" name="condition" value="3">
+                        </div>
+                        <div class="input-group" data-tip="Construction quality grade 1 (poor) to 13 (luxury)">
+                            <label for="grade">Build Grade <span class="unit">(1–13)</span></label>
+                            <input type="number" id="grade" name="grade" placeholder="e.g. 7" min="1" max="13" required>
+                            <div class="grade-hint" id="grade-hint">Average quality</div>
+                        </div>
+                        <div class="input-group" data-tip="Year the house was built">
+                            <label for="built_year">Year Built</label>
+                            <input type="number" id="built_year" name="built_year" placeholder="e.g. 2005" min="1800" max="2025" required>
+                        </div>
+                        <div class="input-group" data-tip="Year of last renovation (0 if never renovated)">
+                            <label for="renovation_year">Renovation Year <span class="unit">(0 = never)</span></label>
+                            <input type="number" id="renovation_year" name="renovation_year" placeholder="0 if never" min="0" max="2025" required>
+                        </div>
+                        <div class="input-group" data-tip="Living area after renovation in sq ft">
+                            <label for="living_area_renov">Living Area (post-renov) <span class="unit">(sq ft)</span></label>
+                            <input type="number" id="living_area_renov" name="living_area_renov" placeholder="e.g. 2000" min="100" max="15000" required>
+                        </div>
+                        <div class="input-group" data-tip="Lot area after renovation in sq ft">
+                            <label for="lot_area_renov">Lot Area (post-renov) <span class="unit">(sq ft)</span></label>
+                            <input type="number" id="lot_area_renov" name="lot_area_renov" placeholder="e.g. 5000" min="100" max="500000" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Location & Extras -->
+                <div class="tab-panel" id="panel-location">
+                    <div class="form-grid">
+                        <div class="input-group toggle-group" data-tip="Is the property on the waterfront?">
+                            <label>Waterfront Property</label>
+                            <div class="toggle-wrapper">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="waterfront" name="waterfront">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label" id="waterfront-label">No</span>
+                            </div>
+                            <input type="hidden" id="waterfront_val" value="0">
+                        </div>
+                        <div class="input-group" data-tip="Number of times the property has been viewed (0-4)">
+                            <label for="views">Property Views <span class="unit">(0–4)</span></label>
+                            <div class="rating-row" id="rating-views">
+                                <button type="button" class="rating-btn" data-val="0">0</button>
+                                <button type="button" class="rating-btn active" data-val="1">1</button>
+                                <button type="button" class="rating-btn" data-val="2">2</button>
+                                <button type="button" class="rating-btn" data-val="3">3</button>
+                                <button type="button" class="rating-btn" data-val="4">4</button>
+                            </div>
+                            <input type="hidden" id="views" name="views" value="1">
+                        </div>
+                        <div class="input-group" data-tip="Number of schools within 2 km">
+                            <label for="schools_nearby">Schools Nearby</label>
+                            <input type="number" id="schools_nearby" name="schools_nearby" placeholder="e.g. 2" min="0" max="20" required>
+                        </div>
+                        <div class="input-group" data-tip="Distance from the nearest airport in km">
+                            <label for="airport_distance">Airport Distance <span class="unit">(km)</span></label>
+                            <input type="number" id="airport_distance" name="airport_distance" placeholder="e.g. 30" min="0" max="200" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="form-nav">
+                    <button type="button" class="btn-ghost" id="btn-prev" disabled>← Back</button>
+                    <div class="step-dots">
+                        <span class="dot active" data-step="0"></span>
+                        <span class="dot" data-step="1"></span>
+                        <span class="dot" data-step="2"></span>
+                    </div>
+                    <button type="button" class="btn-next" id="btn-next">Next →</button>
+                    <button type="submit" class="btn-predict hidden" id="btn-predict">
+                        <span class="btn-text">Predict Price</span>
+                        <span class="spinner"></span>
+                    </button>
+                </div>
+
+            </form>
+        </main>
+
+        <!-- ── Result Panel ────────────────────────────────── -->
+        <div class="result-panel hidden" id="result-panel">
+            <div class="result-header">
+                <span class="result-tag">AI Estimate</span>
+                <span class="result-conf" id="result-conf">77% confidence</span>
+            </div>
+            <div class="result-price" id="result-price">₹0</div>
+            <div class="price-range">
+                <span class="range-low" id="range-low">₹0</span>
+                <div class="range-bar">
+                    <div class="range-fill" id="range-fill"></div>
+                    <div class="range-thumb" id="range-thumb"></div>
+                </div>
+                <span class="range-high" id="range-high">₹0</span>
+            </div>
+            <p class="range-label">Estimated price range based on market variance</p>
+            <div class="result-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Model R² Score</span>
+                    <span class="meta-val" id="meta-r2">—</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Training Data</span>
+                    <span class="meta-val">14,620 homes</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Algorithm</span>
+                    <span class="meta-val">Gradient Boost</span>
+                </div>
+            </div>
+            <button class="btn-reset" id="btn-reset">Predict Another →</button>
+        </div>
+
+        <footer class="site-footer">
+            Trained on the <em>House Price India</em> dataset &nbsp;·&nbsp; ProphetAI v2.0
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
