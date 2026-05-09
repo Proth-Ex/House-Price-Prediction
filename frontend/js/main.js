@@ -6,7 +6,7 @@
    ═══════════════════════════════════════════════════════ */
 
 // Replace the URL below with your actual Render URL
-const BACKEND_URL = 'https://house-price-prediction-fuey.onrender.com/';
+const BACKEND_URL = 'https://house-price-prediction-fuey.onrender.com';
 
 const API_URL = `${BACKEND_URL}/predict`;
 const HEALTH_URL = `${BACKEND_URL}/health`;
