@@ -5,8 +5,12 @@
    Handles: tabs, ratings, toggles, validation, API call
    ═══════════════════════════════════════════════════════ */
 
-const API_URL = 'http://localhost:8000/predict';
-const HEALTH_URL = 'http://localhost:8000/health';
+// Replace the URL below with your actual Render URL
+const BACKEND_URL = 'https://house-price-prediction-fuey.onrender.com/';
+
+const API_URL = `${BACKEND_URL}/predict`;
+const HEALTH_URL = `${BACKEND_URL}/health`;
+
 
 // ── Grade descriptions ──────────────────────────────────
 const GRADE_LABELS = {
@@ -27,21 +31,21 @@ function formatINR(val) {
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ── DOM refs ───────────────────────────────────────── */
-    const tabs        = document.querySelectorAll('.tab');
-    const panels      = document.querySelectorAll('.tab-panel');
-    const dots        = document.querySelectorAll('.dot');
-    const btnPrev     = document.getElementById('btn-prev');
-    const btnNext     = document.getElementById('btn-next');
-    const btnPredict  = document.getElementById('btn-predict');
-    const form        = document.getElementById('prediction-form');
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.tab-panel');
+    const dots = document.querySelectorAll('.dot');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnPredict = document.getElementById('btn-predict');
+    const form = document.getElementById('prediction-form');
     const resultPanel = document.getElementById('result-panel');
-    const badgeDot    = document.querySelector('.badge-dot');
-    const badgeText   = document.getElementById('badge-text');
-    const gradeInput  = document.getElementById('grade');
-    const gradeHint   = document.getElementById('grade-hint');
-    const waterfrontCb= document.getElementById('waterfront');
-    const waterfrontVal= document.getElementById('waterfront_val');
-    const waterfrontLbl= document.getElementById('waterfront-label');
+    const badgeDot = document.querySelector('.badge-dot');
+    const badgeText = document.getElementById('badge-text');
+    const gradeInput = document.getElementById('grade');
+    const gradeHint = document.getElementById('grade-hint');
+    const waterfrontCb = document.getElementById('waterfront');
+    const waterfrontVal = document.getElementById('waterfront_val');
+    const waterfrontLbl = document.getElementById('waterfront-label');
 
     let currentStep = 0;
     const TOTAL_STEPS = 3;
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── Health check ───────────────────────────────────── */
     (async () => {
         try {
-            const res  = await fetch(HEALTH_URL);
+            const res = await fetch(HEALTH_URL);
             const data = await res.json();
             if (data.model_loaded) {
                 badgeDot.classList.add('online');
@@ -116,9 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ── Sync living/lot area → renov fields (auto-fill) ── */
     const livingArea = document.getElementById('living_area');
-    const lotArea    = document.getElementById('lot_area');
+    const lotArea = document.getElementById('lot_area');
     const livingRenov = document.getElementById('living_area_renov');
-    const lotRenov    = document.getElementById('lot_area_renov');
+    const lotRenov = document.getElementById('lot_area_renov');
 
     livingArea.addEventListener('input', () => {
         if (!livingRenov.value) livingRenov.value = livingArea.value;
@@ -129,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ── Sync above-ground = living - basement ──────────── */
     const basementArea = document.getElementById('basement_area');
-    const areaExcl     = document.getElementById('area_excl_basement');
+    const areaExcl = document.getElementById('area_excl_basement');
 
     function syncAboveGround() {
         const la = parseFloat(livingArea.value) || 0;
@@ -155,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let ok = true;
         REQUIRED_IDS.forEach(id => {
             const el = document.getElementById(id);
-            const v  = el.value.trim();
+            const v = el.value.trim();
             if (v === '' || isNaN(Number(v))) {
                 el.classList.add('invalid');
                 ok = false;
@@ -190,27 +194,27 @@ document.addEventListener('DOMContentLoaded', () => {
         btnPredict.classList.add('loading');
 
         const payload = {
-            bedrooms:               parseInt(document.getElementById('bedrooms').value),
-            bathrooms:              parseFloat(document.getElementById('bathrooms').value),
-            living_area:            parseInt(document.getElementById('living_area').value),
-            lot_area:               parseInt(document.getElementById('lot_area').value),
-            floors:                 parseFloat(document.getElementById('floors').value),
-            waterfront:             parseInt(waterfrontVal.value),
-            views:                  parseInt(document.getElementById('views').value),
-            condition:              parseInt(document.getElementById('condition').value),
-            grade:                  parseInt(document.getElementById('grade').value),
-            area_excluding_basement:parseInt(document.getElementById('area_excl_basement').value),
-            basement_area:          parseInt(document.getElementById('basement_area').value),
-            built_year:             parseInt(document.getElementById('built_year').value),
-            renovation_year:        parseInt(document.getElementById('renovation_year').value),
-            living_area_renov:      parseInt(document.getElementById('living_area_renov').value),
-            lot_area_renov:         parseInt(document.getElementById('lot_area_renov').value),
-            schools_nearby:         parseInt(document.getElementById('schools_nearby').value),
-            airport_distance:       parseInt(document.getElementById('airport_distance').value),
+            bedrooms: parseInt(document.getElementById('bedrooms').value),
+            bathrooms: parseFloat(document.getElementById('bathrooms').value),
+            living_area: parseInt(document.getElementById('living_area').value),
+            lot_area: parseInt(document.getElementById('lot_area').value),
+            floors: parseFloat(document.getElementById('floors').value),
+            waterfront: parseInt(waterfrontVal.value),
+            views: parseInt(document.getElementById('views').value),
+            condition: parseInt(document.getElementById('condition').value),
+            grade: parseInt(document.getElementById('grade').value),
+            area_excluding_basement: parseInt(document.getElementById('area_excl_basement').value),
+            basement_area: parseInt(document.getElementById('basement_area').value),
+            built_year: parseInt(document.getElementById('built_year').value),
+            renovation_year: parseInt(document.getElementById('renovation_year').value),
+            living_area_renov: parseInt(document.getElementById('living_area_renov').value),
+            lot_area_renov: parseInt(document.getElementById('lot_area_renov').value),
+            schools_nearby: parseInt(document.getElementById('schools_nearby').value),
+            airport_distance: parseInt(document.getElementById('airport_distance').value),
         };
 
         try {
-            const res  = await fetch(API_URL, {
+            const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
@@ -236,22 +240,22 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── Show result ────────────────────────────────────── */
     function showResult(data) {
         const price = data.predicted_price;
-        const low   = data.price_range_low;
-        const high  = data.price_range_high;
-        const conf  = data.confidence_pct;
-        const r2    = data.model_r2;
+        const low = data.price_range_low;
+        const high = data.price_range_high;
+        const conf = data.confidence_pct;
+        const r2 = data.model_r2;
 
         document.getElementById('result-price').textContent = formatINR(price);
-        document.getElementById('range-low').textContent    = formatINR(low);
-        document.getElementById('range-high').textContent   = formatINR(high);
-        document.getElementById('result-conf').textContent  = `${conf.toFixed(1)}% confidence`;
-        document.getElementById('meta-r2').textContent      = r2.toFixed(4);
+        document.getElementById('range-low').textContent = formatINR(low);
+        document.getElementById('range-high').textContent = formatINR(high);
+        document.getElementById('result-conf').textContent = `${conf.toFixed(1)}% confidence`;
+        document.getElementById('meta-r2').textContent = r2.toFixed(4);
 
         // Animate the range bar thumb to center
-        const fill  = document.getElementById('range-fill');
+        const fill = document.getElementById('range-fill');
         const thumb = document.getElementById('range-thumb');
-        fill.style.width  = '100%';
-        thumb.style.left  = '50%';
+        fill.style.width = '100%';
+        thumb.style.left = '50%';
 
         document.getElementById('main-card').classList.add('hidden');
         resultPanel.classList.remove('hidden');
