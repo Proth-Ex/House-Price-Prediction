@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI House Price Predictor — India</title>
-    <meta name="description" content="Predict Indian house prices instantly using a machine learning model trained on real estate data.">
+    <meta name="description"
+        content="Predict Indian house prices instantly using a machine learning model trained on real estate data.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <!-- Ambient background -->
@@ -36,7 +40,8 @@
         <!-- ── Hero ───────────────────────────────────────── -->
         <section class="hero">
             <h1>Predict Your <span class="gradient-text">Property Value</span></h1>
-            <p class="hero-sub">Powered by a Gradient Boosting model trained on <strong>14,620</strong> real estate transactions across India.</p>
+            <p class="hero-sub">Powered by a Gradient Boosting model trained on <strong>14,620</strong> real estate
+                transactions across India.</p>
         </section>
 
         <!-- ── Main Card ──────────────────────────────────── -->
@@ -55,31 +60,38 @@
                     <div class="form-grid">
                         <div class="input-group" data-tip="Total heated living space in sq ft">
                             <label for="living_area">Living Area <span class="unit">(sq ft)</span></label>
-                            <input type="number" id="living_area" name="living_area" placeholder="e.g. 2000" min="100" max="15000" required>
+                            <input type="number" id="living_area" name="living_area" placeholder="e.g. 2000" min="100"
+                                max="15000" required>
                         </div>
                         <div class="input-group" data-tip="Total lot / plot area in sq ft">
                             <label for="lot_area">Lot Area <span class="unit">(sq ft)</span></label>
-                            <input type="number" id="lot_area" name="lot_area" placeholder="e.g. 5000" min="100" max="500000" required>
+                            <input type="number" id="lot_area" name="lot_area" placeholder="e.g. 5000" min="100"
+                                max="500000" required>
                         </div>
                         <div class="input-group" data-tip="Number of bedrooms">
                             <label for="bedrooms">Bedrooms</label>
-                            <input type="number" id="bedrooms" name="bedrooms" placeholder="e.g. 3" min="1" max="20" required>
+                            <input type="number" id="bedrooms" name="bedrooms" placeholder="e.g. 3" min="1" max="20"
+                                required>
                         </div>
                         <div class="input-group" data-tip="Number of bathrooms (half-bath = 0.5)">
                             <label for="bathrooms">Bathrooms</label>
-                            <input type="number" id="bathrooms" name="bathrooms" placeholder="e.g. 2" min="0.5" max="10" step="0.25" required>
+                            <input type="number" id="bathrooms" name="bathrooms" placeholder="e.g. 2" min="0.5" max="10"
+                                step="0.25" required>
                         </div>
                         <div class="input-group" data-tip="Number of floors in the house">
                             <label for="floors">Floors</label>
-                            <input type="number" id="floors" name="floors" placeholder="e.g. 2" min="1" max="4" step="0.5" required>
+                            <input type="number" id="floors" name="floors" placeholder="e.g. 2" min="1" max="4"
+                                step="0.5" required>
                         </div>
                         <div class="input-group" data-tip="Above-ground sq ft (excluding basement)">
                             <label for="area_excl_basement">Above Ground <span class="unit">(sq ft)</span></label>
-                            <input type="number" id="area_excl_basement" name="area_excl_basement" placeholder="e.g. 1800" min="0" max="15000" required>
+                            <input type="number" id="area_excl_basement" name="area_excl_basement"
+                                placeholder="e.g. 1800" min="0" max="15000" required>
                         </div>
                         <div class="input-group" data-tip="Basement floor area in sq ft (0 if none)">
                             <label for="basement_area">Basement Area <span class="unit">(sq ft)</span></label>
-                            <input type="number" id="basement_area" name="basement_area" placeholder="0 if no basement" min="0" max="5000" required>
+                            <input type="number" id="basement_area" name="basement_area" placeholder="0 if no basement"
+                                min="0" max="5000" required>
                         </div>
                     </div>
                 </div>
@@ -105,19 +117,24 @@
                         </div>
                         <div class="input-group" data-tip="Year the house was built">
                             <label for="built_year">Year Built</label>
-                            <input type="number" id="built_year" name="built_year" placeholder="e.g. 2005" min="1800" max="2025" required>
+                            <input type="number" id="built_year" name="built_year" placeholder="e.g. 2005" min="1800"
+                                max="2025" required>
                         </div>
                         <div class="input-group" data-tip="Year of last renovation (0 if never renovated)">
                             <label for="renovation_year">Renovation Year <span class="unit">(0 = never)</span></label>
-                            <input type="number" id="renovation_year" name="renovation_year" placeholder="0 if never" min="0" max="2025" required>
+                            <input type="number" id="renovation_year" name="renovation_year" placeholder="0 if never"
+                                min="0" max="2025" required>
                         </div>
                         <div class="input-group" data-tip="Living area after renovation in sq ft">
-                            <label for="living_area_renov">Living Area (post-renov) <span class="unit">(sq ft)</span></label>
-                            <input type="number" id="living_area_renov" name="living_area_renov" placeholder="e.g. 2000" min="100" max="15000" required>
+                            <label for="living_area_renov">Living Area (post-renov) <span class="unit">(sq
+                                    ft)</span></label>
+                            <input type="number" id="living_area_renov" name="living_area_renov" placeholder="e.g. 2000"
+                                min="100" max="15000" required>
                         </div>
                         <div class="input-group" data-tip="Lot area after renovation in sq ft">
                             <label for="lot_area_renov">Lot Area (post-renov) <span class="unit">(sq ft)</span></label>
-                            <input type="number" id="lot_area_renov" name="lot_area_renov" placeholder="e.g. 5000" min="100" max="500000" required>
+                            <input type="number" id="lot_area_renov" name="lot_area_renov" placeholder="e.g. 5000"
+                                min="100" max="500000" required>
                         </div>
                     </div>
                 </div>
@@ -149,11 +166,13 @@
                         </div>
                         <div class="input-group" data-tip="Number of schools within 2 km">
                             <label for="schools_nearby">Schools Nearby</label>
-                            <input type="number" id="schools_nearby" name="schools_nearby" placeholder="e.g. 2" min="0" max="20" required>
+                            <input type="number" id="schools_nearby" name="schools_nearby" placeholder="e.g. 2" min="0"
+                                max="20" required>
                         </div>
                         <div class="input-group" data-tip="Distance from the nearest airport in km">
                             <label for="airport_distance">Airport Distance <span class="unit">(km)</span></label>
-                            <input type="number" id="airport_distance" name="airport_distance" placeholder="e.g. 30" min="0" max="200" required>
+                            <input type="number" id="airport_distance" name="airport_distance" placeholder="e.g. 30"
+                                min="0" max="200" required>
                         </div>
                     </div>
                 </div>
@@ -203,17 +222,18 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Algorithm</span>
-                    <span class="meta-val">Gradient Boost</span>
+                    <span class="meta-val">Linear Regression</span>
                 </div>
             </div>
             <button class="btn-reset" id="btn-reset">Predict Another →</button>
         </div>
 
         <footer class="site-footer">
-            Trained on the <em>House Price India</em> dataset &nbsp;·&nbsp; ProphetAI v2.0
+            Trained on the <em>House Price India</em> dataset
         </footer>
     </div>
 
     <script src="js/main.js"></script>
 </body>
+
 </html>
