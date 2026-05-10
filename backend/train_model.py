@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 import joblib
 import os
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, r2_score
@@ -66,17 +66,10 @@ def main():
         X, y, test_size=0.2, random_state=42
     )
 
-    print("[INFO] Training Gradient Boosting Regressor...")
+    print("[INFO] Training Linear Regression Model...")
     pipeline = Pipeline([
         ("scaler", StandardScaler()),
-        ("model", GradientBoostingRegressor(
-            n_estimators=400,
-            learning_rate=0.08,
-            max_depth=5,
-            subsample=0.8,
-            min_samples_split=5,
-            random_state=42,
-        )),
+        ("model", LinearRegression()),
     ])
     pipeline.fit(X_train, y_train)
 

@@ -18,9 +18,9 @@
     "Number of schools nearby",
     "Distance from the airport"
   ],
-  "r2": 0.7655387390552967,
-  "mae": 1356210.4181262713,
-  "mape": 22.967622615202597,
+  "r2": 0.6791651518930548,
+  "mae": 1655691.6288086504,
+  "mape": 28.487903121829905,
   "train_size": 11696,
   "test_size": 2924,
   "stats": {
