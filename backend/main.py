@@ -1,6 +1,6 @@
 """
 House Price Prediction API
-Loads the trained GradientBoosting pipeline and serves predictions via FastAPI.
+Loads the trained Linear Regression pipeline and serves predictions via FastAPI.
 """
 
 from fastapi import FastAPI, HTTPException
@@ -37,7 +37,7 @@ load_model()
 # ─── App ──────────────────────────────────────────────────────────────────────
 app = FastAPI(
     title="House Price Prediction API",
-    description="Predicts house prices using a trained GradientBoosting ML model.",
+    description="Predicts house prices using a trained Linear Regression model.",
     version="2.0.0",
 )
 
@@ -60,7 +60,6 @@ FEATURES = [
     "number of views",
     "condition of the house",
     "grade of the house",
-    "Area of the house(excluding basement)",
     "Area of the basement",
     "Built Year",
     "Renovation Year",
@@ -114,7 +113,6 @@ async def predict_price(features: HouseFeatures):
         features.views,
         features.condition,
         features.grade,
-        features.area_excluding_basement,
         features.basement_area,
         features.built_year,
         features.renovation_year,

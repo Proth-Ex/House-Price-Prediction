@@ -13,7 +13,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.pipeline import Pipeline
-from sklearn.compose import TransformedTargetRegressor
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
 DATASET_PATH = os.path.join(os.path.dirname(__file__), "..", "House Price India.csv")
@@ -31,7 +30,6 @@ FEATURES = [
     "number of views",
     "condition of the house",
     "grade of the house",
-    "Area of the house(excluding basement)",
     "Area of the basement",
     "Built Year",
     "Renovation Year",
@@ -67,13 +65,9 @@ def main():
         X, y, test_size=0.2, random_state=42
     )
 
-    print("[INFO] Training Linear Regression Model with Log Transformation...")
+    print("[INFO] Training Linear Regression Model...")
     
-    linear_model = TransformedTargetRegressor(
-        regressor=LinearRegression(),
-        func=np.log1p,
-        inverse_func=np.expm1
-    )
+    linear_model = LinearRegression()
 
     pipeline = Pipeline([
         ("scaler", StandardScaler()),

@@ -9,7 +9,6 @@
     "number of views",
     "condition of the house",
     "grade of the house",
-    "Area of the house(excluding basement)",
     "Area of the basement",
     "Built Year",
     "Renovation Year",
@@ -18,9 +17,9 @@
     "Number of schools nearby",
     "Distance from the airport"
   ],
-  "r2": 0.6820228410006384,
-  "mae": 1532954.3033700786,
-  "mape": 24.60980181840064,
+  "r2": 0.679290173146003,
+  "mae": 1655202.7081136215,
+  "mape": 28.477751118069943,
   "train_size": 11696,
   "test_size": 2924,
   "stats": {
@@ -68,11 +67,6 @@
       "min": 4.0,
       "max": 13.0,
       "mean": 7.682421340629275
-    },
-    "Area of the house(excluding basement)": {
-      "min": 185.0,
-      "max": 4705.0,
-      "mean": 900.8859097127223
     },
     "Area of the basement": {
       "min": 0.0,
