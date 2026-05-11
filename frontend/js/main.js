@@ -66,6 +66,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })();
 
+    /* ── Fetch Talukas ──────────────────────────────────── */
+    const talukaSelect = document.getElementById('taluka');
+    (async () => {
+        try {
+            const res = await fetch(`${BACKEND_URL}/talukas`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data.talukas) {
+                    data.talukas.forEach(t => {
+                        const opt = document.createElement('option');
+                        opt.value = t;
+                        opt.textContent = t;
+                        opt.style.color = 'black';
+                        talukaSelect.appendChild(opt);
+                    });
+                }
+            }
+        } catch (e) {
+            console.error('Failed to load talukas:', e);
+        }
+    })();
+
     /* ── Tab navigation ─────────────────────────────────── */
     function goToStep(step) {
         tabs.forEach(t => t.classList.remove('active'));
@@ -211,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lot_area_renov: parseInt(document.getElementById('lot_area_renov').value),
             schools_nearby: parseInt(document.getElementById('schools_nearby').value),
             airport_distance: parseInt(document.getElementById('airport_distance').value),
+            taluka: document.getElementById('taluka').value || null,
         };
 
         try {
@@ -300,6 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
             b.classList.toggle('active', b.dataset.val === '1');
         });
         document.getElementById('views').value = '1';
+        if(document.getElementById('taluka')) document.getElementById('taluka').value = '';
         delete areaExcl.dataset.manual;
         goToStep(0);
     });

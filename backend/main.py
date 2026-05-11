@@ -10,6 +10,8 @@ import joblib
 import numpy as np
 import json
 import os
+import csv
+from typing import Optional
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
 BASE_DIR   = os.path.dirname(__file__)
@@ -33,6 +35,22 @@ def load_model():
             metadata = json.load(f)
 
 load_model()
+
+TALUKA_CSV_PATH = os.path.join(BASE_DIR, "..", "Goa_Taluka_Multipliers.csv")
+taluka_multipliers = {}
+
+def load_talukas():
+    global taluka_multipliers
+    if os.path.exists(TALUKA_CSV_PATH):
+        with open(TALUKA_CSV_PATH, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                try:
+                    taluka_multipliers[row["Taluka"].strip()] = float(row["Location_Multiplier"])
+                except Exception:
+                    pass
+
+load_talukas()
 
 # ─── App ──────────────────────────────────────────────────────────────────────
 app = FastAPI(
@@ -87,6 +105,7 @@ class HouseFeatures(BaseModel):
     lot_area_renov:        int   = Field(..., ge=100, le=500000, description="Lot area after renovation sq ft")
     schools_nearby:        int   = Field(..., ge=0,  le=20,   description="Number of schools nearby")
     airport_distance:      int   = Field(..., ge=0,  le=200,  description="Distance from airport (km)")
+    taluka:                Optional[str] = Field(None, description="Taluka for price multiplier")
 
 class PredictionResult(BaseModel):
     predicted_price:  float
@@ -125,6 +144,9 @@ async def predict_price(features: HouseFeatures):
     predicted = float(model.predict(X)[0])
     predicted = max(0, predicted)
 
+    if features.taluka and features.taluka in taluka_multipliers:
+        predicted *= taluka_multipliers[features.taluka]
+
     mape        = metadata.get("mape", 15.0)
     r2          = metadata.get("r2",   0.85)
     confidence  = max(0.0, round(100 - mape, 1))
@@ -138,6 +160,11 @@ async def predict_price(features: HouseFeatures):
         price_range_low  = round(max(0, predicted - margin), 2),
         price_range_high = round(predicted + margin, 2),
     )
+
+
+@app.get("/talukas")
+async def get_talukas():
+    return {"talukas": list(taluka_multipliers.keys())}
 
 
 @app.get("/health")
